@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>My Simple Page</title>
+  <link rel="stylesheet" href="darkmode.css">
 </head>
 <body>
 
@@ -9,6 +10,9 @@
   <p>This is a simple HTML example with a button below.</p>
 
   <button onclick="sayHello()">Click Me</button>
+
+  <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <script src="darkmode.js"></script>
 
   <script>
     function sayHello() {
@@ -23,6 +27,7 @@
       document.getElementById("demoText").innerText = "The text has been changed!";
     }
   </script>
+  
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -42,6 +47,10 @@
   button:hover {
     background-color: #45a049;
   }
+  .dark-mode {
+  background-color: #121212;
+  color: white;
+}
 </style>
   
 
