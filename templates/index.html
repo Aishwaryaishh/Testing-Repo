@@ -1,0 +1,141 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jira & GitHub Health Chat Agent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .chat-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            border-radius: 18px;
+            max-width: 70%;
+            display: inline-block;
+        }
+        .user-message {
+            background-color: #DCF8C6;
+            float: right;
+            clear: both;
+        }
+        .agent-message {
+            background-color: #ECECEC;
+            float: left;
+            clear: both;
+        }
+        .input-container {
+            display: flex;
+        }
+        #query-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .clear-both {
+            clear: both;
+        }
+        .example {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jira & GitHub Health Chat Agent</h1>
+
+    <div class="chat-container" id="chat-container">
+        <div class="agent-message message">Hello! I can help you check the health of your Jira tickets and GitHub PRs. What would you like to know?</div>
+        <div class="clear-both"></div>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="query-input" placeholder="Type your query here...">
+        <button onclick="sendQuery()">Send</button>
+    </div>
+
+    <div class="example">
+        <h3>Example queries:</h3>
+        <ul>
+            <li>What is the status of ICAAI-01?</li>
+            <li>Who is reviewing PR #45?</li>
+            <li>What are the comments on PR #45?</li>
+            <li>Show me open pull requests</li>
+            <li>Are there any blocked tickets?</li>
+        </ul>
+    </div>
+
+    <script>
+        function appendMessage(message, type) {
+            const chatContainer = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${type} message`;
+            messageDiv.innerText = message;
+            chatContainer.appendChild(messageDiv);
+            
+            const clearDiv = document.createElement('div');
+            clearDiv.className = 'clear-both';
+            chatContainer.appendChild(clearDiv);
+            
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function sendQuery() {
+            const queryInput = document.getElementById('query-input');
+            const query = queryInput.value.trim();
+            
+            if (query === '') return;
+            
+            appendMessage(query, 'user-message');
+            queryInput.value = '';
+            
+            fetch('/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({query: query}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage(data.response, 'agent-message');
+            })
+            .catch(error => {
+                appendMessage('Error: Could not process your request.', 'agent-message');
+                console.error('Error:', error);
+            });
+        }
+
+        // Allow pressing Enter to send messages
+        document.getElementById('query-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendQuery();
+            }
+        });
+    </script>
+</body>
+</html>
