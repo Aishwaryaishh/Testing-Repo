@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Simple Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      color: #000;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hello, Welcome to My Page!</h1>
+
+  <button onclick="sayHello()">Click Me</button>
+  <button onclick="changeText()">Change Text</button>
+  <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <button onclick="incrementCounter()">Click Me!</button>
+  
+<p id="clickCount">You clicked 0 times.</p>
+
+<script src="js/counter.js"></script>
+
+
+  <p id="demoText">Original text.</p>
+
+  <script>
+    function sayHello() {
+      alert("Hello! You clicked the button.");
+    }
+
+    function changeText() {
+      document.getElementById("demoText").innerText = "The text has been changed!";
+    }
+  </script>
+
+  <!-- Link dark mode JS file -->
+  <script src="darkmode.js"></script>
+
+</body>
+</html>
