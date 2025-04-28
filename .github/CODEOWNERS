@@ -1,0 +1,10 @@
+# Default owners for everything
+* @Aishwaryaishh @raj2208 @ramkrish13
+
+# Workflows ownership
+.github/workflows/ @Aishwaryaishh @IACAI
+
+# Frontend ownership
+web.js @frontend-team
+darkmode.js @raj2208
+darkmode.css  @Aishwaryaishh
